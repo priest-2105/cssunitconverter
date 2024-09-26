@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Css Converter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="./web-ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+                <div class="body">
+                   <div class="body-inner"> 
+                    <h1>Css Converter</h1>
+                    
+                    <div class="input-group">
+                        <!-- <label for="password">Password</label> -->
+                         <div class="password-input-container">                          
+                        <select name="passwordStrength" id="passwordStrength">
+                            <option id="weakOption" value="weak">Weak</option>
+                            <option id="normalOption" value="normal">Normal</option>
+                            <option id="strongOption" value="strong">Strong</option>
+                            <option id="veryStrongOption" value="veryStrong">Very Strong</option>
+                        </select>
+                        <button class="generatePassword" id="generatePassword">Generate</button> 
+                          </div>
+                         <div class="password-input-container-two">                          
+                            <div class="password-result" id="passwordResult"></div>
+                            <button id="copyclipboard"> <i class="bi bi-clipboard"></i></button>
+                            <button id="copyclipboardcheck"> <i class="bi bi-clipboard-check"></i></button>
+                             </div>
+                    <p> Check Password password Strength<a target="_blank" href="https://xpasswordstrengthchecker.netlify.app/"> Here</a></p>
+                    </div>
+                   </div> 
+
+                   <div class="footer">
+                    <p>��  Created by <a target="_blank" href="https://github.com/priest-2105"> Fawaz Bailey</a>. All rights reserved.</p>
+                </div>
+                        
+            </div>   
+<script src="./super.js"></script>
+</body>
+</html>
