@@ -1,7 +1,13 @@
 const units = [
     {
+     type: 'select unit'
+    },
+    {
         type: "absolute",
         subunits: [
+            {
+            name: 'select subunit'
+            },
             {
                 name: "inch",
                 abbreviation: "in",
@@ -42,6 +48,9 @@ const units = [
     {
         type: "relative",
         subunits: [
+            {
+            name: 'select subunit'
+            },
             {
                 name: "em",
                 abbreviation: "em",
@@ -102,6 +111,9 @@ const units = [
         type: "angle",
         subunits: [
             {
+            name: 'select subunit'
+            },
+            {
                 name: "degrees",
                 abbreviation: "deg",
                 conversionRate: 1,
@@ -131,6 +143,9 @@ const units = [
         type: "time",
         subunits: [
             {
+            name: 'select subunit'
+            },
+            {
                 name: "seconds",
                 abbreviation: "s",
                 conversionRate: 1,
@@ -147,6 +162,9 @@ const units = [
     {
         type: "resolution",
         subunits: [
+            {
+            name: 'select subunit'
+            },
             {
                 name: "dots per inch",
                 abbreviation: "dpi",
@@ -168,3 +186,118 @@ const units = [
         ]
     }
 ];
+
+
+
+const unitSelections_El = document.getElementById('unitSelection');
+const fromSubUnitSelections_El = document.getElementById('fromSubUnitSelection');
+const toSubUnitSelections_El = document.getElementById('toSubUnitSelection');
+const convertButton_El = document.getElementById('convertButton');
+const unitInputContainerTwo_El = document.getElementById('unitInputContainerTwo');
+const convertValue_El = document.getElementById('convertValue');
+const resultValueContainer_El = document.getElementById('resultValueContainer');
+const convertIcon_El = document.getElementById('convertIcon');
+const fromSubunitSelectionContainer_El = document.getElementById('fromSubunitSelectionContainer');
+const toSubunitSelectionContainer_El = document.getElementById('toSubunitSelectionContainer');
+const unitResult_El = document.getElementById('unitResult');
+const copyClipboard_El = document.getElementById('copyclipboard');
+const copyClipboardCheck_El = document.getElementById('copyclipboardcheck');
+
+// Initial hiding of elements
+toSubunitSelectionContainer_El.style.display = 'none';
+fromSubunitSelectionContainer_El.style.display = 'none';
+convertButton_El.style.display = 'none';
+convertValue_El.style.display = 'none';
+resultValueContainer_El.style.display = 'none';
+convertIcon_El.style.display = 'none';
+copyClipboardCheck_El.style.display = 'none';  // Initially hide the checkmark clipboard icon
+
+// Populate unit selection dropdown
+units.forEach((unit, i) => {
+    let unitOption = document.createElement('option');
+    unitOption.value = unit.type;
+    unitOption.innerText = unit.type;
+    unitSelections_El.appendChild(unitOption);
+    unitIndex = i; 
+});
+
+unitSelections_El.addEventListener('change', () => {
+    getSelectedSubUnit();
+});
+
+function getSelectedSubUnit() {
+    let selectedValue = unitSelections_El.value;
+    let selectedIndex = Array.from(unitSelections_El.options).findIndex(option => option.value === selectedValue);
+    fromSubUnitSelections_El.innerHTML = '';
+    toSubUnitSelections_El.innerHTML = '';
+
+    if (selectedIndex >= 0 && units[selectedIndex].subunits) {
+        fromSubUnitSelections_El.style.display = 'block';
+        toSubUnitSelections_El.style.display = 'block';
+
+        units[selectedIndex].subunits.forEach((subunit) => {
+            let fromSubUnitOption = document.createElement('option');
+            let toSubUnitOption = document.createElement('option');
+            fromSubUnitOption.value = subunit.name;
+            toSubUnitOption.value = subunit.name;
+            fromSubUnitOption.innerText = subunit.name;
+            toSubUnitOption.innerText = subunit.name;
+            fromSubUnitSelections_El.appendChild(fromSubUnitOption);
+            toSubUnitSelections_El.appendChild(toSubUnitOption);
+        });
+    }
+}
+
+// Show conversion input fields when the toSubUnit is selected
+toSubUnitSelections_El.addEventListener('change', () => {
+    convertButton_El.style.display = 'block';
+    convertValue_El.style.display = 'block';
+    convertIcon_El.style.display = 'block';
+});
+
+// Convert units when the button is clicked
+convertButton_El.addEventListener('click', () => {
+    convertUnits();
+});
+
+// Clipboard functionality
+copyClipboard_El.addEventListener('click', () => {
+    navigator.clipboard.writeText(unitResult_El.innerText).then(() => {
+        copyClipboard_El.style.display = 'none';
+        copyClipboardCheck_El.style.display = 'block';  // Show checkmark icon
+
+        setTimeout(() => {
+            copyClipboardCheck_El.style.display = 'none';
+            copyClipboard_El.style.display = 'block';  // Reset to clipboard icon after 2 seconds
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+});
+
+function getConversionRate(subunitName, unitType) {
+    const selectedUnit = units.find(unit => unit.type === unitType);
+    const subunit = selectedUnit.subunits.find(sub => sub.name === subunitName);
+    return subunit ? subunit.conversionRate : null;
+}
+
+function convertUnits() {
+    const selectedUnitType = unitSelections_El.value;
+    const fromSubUnit = fromSubUnitSelections_El.value;
+    const toSubUnit = toSubUnitSelections_El.value;
+    const inputValue = parseFloat(convertValue_El.value);
+
+    const fromRate = getConversionRate(fromSubUnit, selectedUnitType);
+    const toRate = getConversionRate(toSubUnit, selectedUnitType);
+
+    if (fromRate && toRate && !isNaN(inputValue)) {
+        const baseValue = inputValue * fromRate;
+        const resultValue = baseValue / toRate;
+
+        unitResult_El.innerText = `${resultValue.toFixed(2)} ${toSubUnit}`;
+        resultValueContainer_El.style.display = 'block';
+    } else {
+        unitResult_El.innerText = "Invalid conversion";
+        resultValueContainer_El.style.display = 'block';
+    }
+}

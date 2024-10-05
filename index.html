@@ -9,40 +9,47 @@
 <body>
                 <div class="body">
                    <div class="body-inner"> 
-                    <h1>Css Converter</h1>
+                    <h1>Css Unit Converter</h1>
                     
                     <div class="input-group">
-                        <!-- <label for="password">Password</label> -->
-                         <div class="password-input-container">                          
-                        <select name="unitSelection" id="unitSelection">
-                            <option id="weakUnit" value="absolute">Absolute Unit</option>
+                        <!-- <label for="unit">unit</label> -->
+                         <div class="unit-input-container">                          
+                        <select name="unitSelection" id="unitSelection"> 
+                        </select>
+                         </div>
+
+                         <div class="unit-input-container">                   
+                           <div class="from-subunit-selection-container" id="fromSubunitSelectionContainer">
+                            <label for="">From</label>       
+                            <select name="fromSubUnitSelection" id="fromSubUnitSelection"></select>
+                           </div>
+                            <button id="convertIcon" disabled><i class="bi bi-arrow-left-right"></i> </button>
+                           <div class="to-subunit-selection-container" id="toSubunitSelectionContainer">
+                            <label for="">To</label>       
+                            <select name="toSubUnitSelection" id="toSubUnitSelection"> </select>
+                           </div>
+                         </div>
+
+                         <div class="unit-input-container-two" id="unitInputContainerTwo">                          
+                           <input id="convertValue" placeholder="uniit value (32px)" type="text" >                         
+                        <button id="convertIcon" disabled><i class="bi bi-arrow-left-right"></i> </button>
                   
-                            <!-- <option id="normalUnit" value="relative">Normal</option>
-                            <option id="angleUnit" value="angle">Strong</option>
-                            <option id="timeUnit" value="time">Very Strong</option>
-                            <option id="resolutionUnit" value="resolution">Very Strong</option>
-                   -->
-                        </select>
+                        <div class="result-value" id="resultValueContainer">
+                        <div class="result-value" id="unitResult">42 rem</div>
+                        <button id="copyclipboard"> <i class="bi bi-clipboard"></i></button>
+                        <button id="copyclipboardcheck"> <i class="bi bi-clipboard-check"></i></button>
+                            </div>
+                 
+                        </div>
+                    </div>   
+                    <div class="unit-input-container-two">                          
+                        <button class="convert-button" id="convertButton">Convert</button>      
 
-                        <select name="subUnitSelection" id="subUnitSelection">
-                            <option id="weakUnit" value="absolute">Absolute Unit</option>
-                        </select>
-
-                        <input id="convertValue" type="text">
-                        <input id="resultValue" type="text">
-                        <button class="convertButton" id="convertButton">Convert</button> 
-                          </div>
-                         <div class="password-input-container-two">                          
-                            <div class="password-result" id="passwordResult"></div>
-                            <button id="copyclipboard"> <i class="bi bi-clipboard"></i></button>
-                            <button id="copyclipboardcheck"> <i class="bi bi-clipboard-check"></i></button>
-                             </div>
-                    <p> Check Password password Strength<a target="_blank" href="https://xunitSelectionchecker.netlify.app/"> Here</a></p>
                     </div>
                    </div> 
 
                    <div class="footer">
-                    <p>��  Created by <a target="_blank" href="https://github.com/priest-2105"> Fawaz Bailey</a>. All rights reserved.</p>
+                    <p>✨✨ Created by <a target="_blank" href="https://github.com/priest-2105"> Fawaz Bailey</a>. All rights reserved.</p>
                 </div>
                         
             </div>   

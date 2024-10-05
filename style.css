@@ -24,6 +24,8 @@ h1{
     background-color: transparent;
     outline: none;
     color: #ccc;
+    margin-right: 20px;
+    margin-left: 20px;
     font-weight: 700;
 }
 .input-group select:hover, .input-group select:active{
@@ -52,37 +54,66 @@ border-top: none !important;
     border-right: none !important;
     outline: none;
     border-left: none !important;
-
-}.password-input-container{
+}.unit-input-container{
     display: flex;
     align-items: center;
     margin-top: 70px;
-}.password-input-container i{
+}.unit-input-container i{
      color: #ccc;
      margin-top: -15px;
      font-size: 18px;
-}.password-input-container button{
+}.convert-button{
      color: #ccc;
      background-color: transparent;
-     border: 2px solid #ccc;
+     border: 2px solid #ccc !important;
      border-radius: 9px;
      cursor: pointer;
-     margin-top: -15px;
-     margin-left: 20px;
+     margin-top: 25px;
+     margin-left: 0;
      font-size: 15px;
      padding: 10px 20px;
-}.password-input-container button:hover{
+}.convert-button:hover{
     -webkit-filter: blur(0.8px);
     filter: blur(0.8px);
-} .password-input-container-two{
+}#convertValue::placeholder{color: #ccc;}
+#convertValue{
+    background-color: transparent;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0.6rem 0.6rem;
+    color: #ccc;
+}
+#convertIcon{background-color: transparent; border: none; margin-left: 20px; margin-right: 20px;}
+#convertIcon i{background-color: transparent; border: none;}
+.result-value{
+    color: #ccc;
+    margin-left: 20px;
+    font-weight: 700;
+}
+.i-arrow-left-right{
+    margin-bottom: -20px;
+}
+
+.from-subunit-selection-container, .to-subunit-selection-container{
+    width: fit-content;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.from-subunit-selection-container label{
+    color: #ccc;
+}
+.to-subunit-selection-container label{
+    color: #ccc;
+}
+ .unit-input-container-two{
     display: flex;
     align-items: center;
     margin-top: 20px;
-}.password-input-container-two i{
+}.unit-input-container-two i{
      color: #ccc;
      margin-top: -15px;
      font-size: 18px;
-}.password-input-container-two button{
+}.unit-input-container-two button{
      color: #ccc;
      background-color: transparent;
      border: none;
@@ -96,13 +127,13 @@ border-top: none !important;
 } .input-group a{
     margin-left: 10px;
     color: aquamarine;
-}.password-result{
+}.unit-result{
     filter: blur(2px);
     color: #ccc;
-}.password-result:hover{
+}.unit-result:hover{
     filter: blur(0.7px);
     color: #ccc;
-}.password-info{
+}.unit-info{
     display: none;
     position: absolute;
     transition-duration: 2s;
@@ -112,16 +143,16 @@ border-top: none !important;
     border-radius: 15px;
     right: 25px;
     top: 25px;
-} .password-info h6{
+} .unit-info h6{
     font-size: 16px;
     font-weight: 600;
         color: #d48e3d;
-} .password-info li{
+} .unit-info li{
     font-weight: 600;
     color: #ccc;
     margin-bottom: 5px;
     font-size: 13px;
-}  .password-info b{
+}  .unit-info b{
     color: rgb(127, 231, 127);
     margin-left: 5px;
     font-size: 17px;
@@ -142,7 +173,6 @@ border-top: none !important;
 .footer:hover{
     filter: blur(0px);
 }
-
 .footer a{
     color: rgb(50, 161, 175);
     margin: 0 20px;
@@ -150,7 +180,6 @@ border-top: none !important;
     transition: color 0.3s ease;
     font-weight: 500;
 }
-
 .footer a:hover{
     font-weight: 500;
     transition: color 0.3s ease;
