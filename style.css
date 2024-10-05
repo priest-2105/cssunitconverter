@@ -152,7 +152,33 @@ border-top: none !important;
     color: #ccc;
     margin-bottom: 5px;
     font-size: 13px;
-}  .unit-info b{
+}
+.result-value .bi-clipboard{
+   background-color: transparent;
+   border: none;
+}  
+
+
+.result-value {
+    display: flex !important;
+    align-items: center;
+    background-color: transparent;
+    width: fit-content;
+}
+
+.result-value-text {
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+.result-value #copyclipboard, .result-value #copyclipboardcheck{
+    background-color: transparent;
+    margin-top: 20px;
+    color: #ccc;
+    font-size: 1.4rem;
+    border: none;
+ }  
+.unit-info b{
     color: rgb(127, 231, 127);
     margin-left: 5px;
     font-size: 17px;

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Css Converter</title>
@@ -7,52 +9,50 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-                <div class="body">
-                   <div class="body-inner"> 
-                    <h1>Css Unit Converter</h1>
-                    
-                    <div class="input-group">
-                        <!-- <label for="unit">unit</label> -->
-                         <div class="unit-input-container">                          
-                        <select name="unitSelection" id="unitSelection"> 
-                        </select>
-                         </div>
+    <div class="body">
+        <div class="body-inner">
+            <h1>Css Unit Converter</h1>
 
-                         <div class="unit-input-container">                   
-                           <div class="from-subunit-selection-container" id="fromSubunitSelectionContainer">
-                            <label for="">From</label>       
-                            <select name="fromSubUnitSelection" id="fromSubUnitSelection"></select>
-                           </div>
-                            <button id="convertIcon" disabled><i class="bi bi-arrow-left-right"></i> </button>
-                           <div class="to-subunit-selection-container" id="toSubunitSelectionContainer">
-                            <label for="">To</label>       
-                            <select name="toSubUnitSelection" id="toSubUnitSelection"> </select>
-                           </div>
-                         </div>
-
-                         <div class="unit-input-container-two" id="unitInputContainerTwo">                          
-                           <input id="convertValue" placeholder="uniit value (32px)" type="text" >                         
-                        <button id="convertIcon" disabled><i class="bi bi-arrow-left-right"></i> </button>
-                  
-                        <div class="result-value" id="resultValueContainer">
-                        <div class="result-value" id="unitResult">42 rem</div>
-                        <button id="copyclipboard"> <i class="bi bi-clipboard"></i></button>
-                        <button id="copyclipboardcheck"> <i class="bi bi-clipboard-check"></i></button>
-                            </div>
-                 
-                        </div>
-                    </div>   
-                    <div class="unit-input-container-two">                          
-                        <button class="convert-button" id="convertButton">Convert</button>      
-
-                    </div>
-                   </div> 
-
-                   <div class="footer">
-                    <p>✨✨ Created by <a target="_blank" href="https://github.com/priest-2105"> Fawaz Bailey</a>. All rights reserved.</p>
+            <div class="input-group">
+                <div class="unit-input-container">
+                    <select name="unitSelection" id="unitSelection"></select>
                 </div>
-                        
-            </div>   
-<script src="./super.js"></script>
+
+                <div class="unit-input-container">
+                    <div class="from-subunit-selection-container" id="fromSubunitSelectionContainer">
+                        <label for="">From</label>
+                        <select name="fromSubUnitSelection" id="fromSubUnitSelection"></select>
+                    </div>
+                    <button id="convertIcon" disabled><i class="bi bi-arrow-left-right"></i></button>
+                    <div class="to-subunit-selection-container" id="toSubunitSelectionContainer">
+                        <label for="">To</label>
+                        <select name="toSubUnitSelection" id="toSubUnitSelection"></select>
+                    </div>
+                </div>
+
+                <div style="display: flex;align-items: center;">
+                <div class="unit-input-container-two" id="unitInputContainerTwo">
+                    <input id="convertValue" placeholder="unit value (e.g. 32px)" type="text">
+                </div>
+
+                <div class="result-value" id="resultValueContainer">
+                    <div class="result-value-text" id="unitResult">42 rem</div>
+                    <button id="copyclipboard"><i class="bi bi-clipboard"></i></button>
+                    <button id="copyclipboardcheck"><i class="bi bi-clipboard-check"></i></button>
+                </div>
+                </div>
+
+                <div class="unit-input-container-two">
+                    <button class="convert-button" id="convertButton">Convert</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>✨✨ Created by <a target="_blank" href="https://github.com/priest-2105">Fawaz Bailey</a>. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="./super.js"></script>
 </body>
 </html>

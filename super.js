@@ -193,87 +193,114 @@ const unitSelections_El = document.getElementById('unitSelection');
 const fromSubUnitSelections_El = document.getElementById('fromSubUnitSelection');
 const toSubUnitSelections_El = document.getElementById('toSubUnitSelection');
 const convertButton_El = document.getElementById('convertButton');
-const unitInputContainerTwo_El = document.getElementById('unitInputContainerTwo');
 const convertValue_El = document.getElementById('convertValue');
 const resultValueContainer_El = document.getElementById('resultValueContainer');
 const convertIcon_El = document.getElementById('convertIcon');
-const fromSubunitSelectionContainer_El = document.getElementById('fromSubunitSelectionContainer');
-const toSubunitSelectionContainer_El = document.getElementById('toSubunitSelectionContainer');
 const unitResult_El = document.getElementById('unitResult');
 const copyClipboard_El = document.getElementById('copyclipboard');
 const copyClipboardCheck_El = document.getElementById('copyclipboardcheck');
 
-// Initial hiding of elements
-toSubunitSelectionContainer_El.style.display = 'none';
-fromSubunitSelectionContainer_El.style.display = 'none';
-convertButton_El.style.display = 'none';
-convertValue_El.style.display = 'none';
-resultValueContainer_El.style.display = 'none';
-convertIcon_El.style.display = 'none';
-copyClipboardCheck_El.style.display = 'none';  // Initially hide the checkmark clipboard icon
+function initializeUI() {
+    toSubUnitSelections_El.style.display = 'none';
+    fromSubUnitSelections_El.style.display = 'none';
+    convertButton_El.style.display = 'none';
+    convertValue_El.style.display = 'none';
+    resultValueContainer_El.style.display = 'none';
+    convertIcon_El.style.display = 'none';
+    copyClipboardCheck_El.style.display = 'none';
 
-// Populate unit selection dropdown
-units.forEach((unit, i) => {
-    let unitOption = document.createElement('option');
-    unitOption.value = unit.type;
-    unitOption.innerText = unit.type;
-    unitSelections_El.appendChild(unitOption);
-    unitIndex = i; 
-});
+
+    units.forEach((unit) => {
+        const option = document.createElement('option');
+        option.value = unit.type;
+        option.innerText = unit.type;
+        unitSelections_El.appendChild(option);
+    });
+}
+
+
 
 unitSelections_El.addEventListener('change', () => {
-    getSelectedSubUnit();
+    populateSubUnits();
+    convertButton_El.style.display = 'block';
 });
 
-function getSelectedSubUnit() {
-    let selectedValue = unitSelections_El.value;
-    let selectedIndex = Array.from(unitSelections_El.options).findIndex(option => option.value === selectedValue);
-    fromSubUnitSelections_El.innerHTML = '';
-    toSubUnitSelections_El.innerHTML = '';
+function populateSubUnits() {
+    const selectedUnitType = unitSelections_El.value;
+    const selectedUnit = units.find(unit => unit.type === selectedUnitType);
 
-    if (selectedIndex >= 0 && units[selectedIndex].subunits) {
+    if (selectedUnit) {
+        fromSubUnitSelections_El.innerHTML = '';
+        toSubUnitSelections_El.innerHTML = '';
+
+
         fromSubUnitSelections_El.style.display = 'block';
+        convertButton_El.style.display = 'none';
         toSubUnitSelections_El.style.display = 'block';
 
-        units[selectedIndex].subunits.forEach((subunit) => {
-            let fromSubUnitOption = document.createElement('option');
-            let toSubUnitOption = document.createElement('option');
-            fromSubUnitOption.value = subunit.name;
-            toSubUnitOption.value = subunit.name;
-            fromSubUnitOption.innerText = subunit.name;
-            toSubUnitOption.innerText = subunit.name;
-            fromSubUnitSelections_El.appendChild(fromSubUnitOption);
-            toSubUnitSelections_El.appendChild(toSubUnitOption);
+
+        selectedUnit.subunits.forEach(subunit => {
+            const fromOption = document.createElement('option');
+            fromOption.value = subunit.name;
+            fromOption.innerText = subunit.name;
+
+            const toOption = document.createElement('option');
+            toOption.value = subunit.name;
+            toOption.innerText = subunit.name;
+
+            fromSubUnitSelections_El.appendChild(fromOption);
+            toSubUnitSelections_El.appendChild(toOption);
         });
+
+        // Show the input field and the convert button
+        convertValue_El.style.display = 'block';
+        convertIcon_El.style.display = 'block';
     }
 }
 
-// Show conversion input fields when the toSubUnit is selected
-toSubUnitSelections_El.addEventListener('change', () => {
-    convertButton_El.style.display = 'block';
-    convertValue_El.style.display = 'block';
-    convertIcon_El.style.display = 'block';
-});
 
-// Convert units when the button is clicked
+
+
 convertButton_El.addEventListener('click', () => {
-    convertUnits();
+    const selectedUnitType = unitSelections_El.value;
+    const fromSubUnit = fromSubUnitSelections_El.value;
+    const toSubUnit = toSubUnitSelections_El.value;
+    const inputValue = parseFloat(convertValue_El.value);
+
+    if (!isNaN(inputValue)) {
+        const fromRate = getConversionRate(fromSubUnit, selectedUnitType);
+        const toRate = getConversionRate(toSubUnit, selectedUnitType);
+
+        if (fromRate && toRate) {
+            const baseValue = inputValue * fromRate;
+            const resultValue = baseValue / toRate;
+
+            unitResult_El.innerText = resultValue.toFixed(2);
+            resultValueContainer_El.style.display = 'block';
+            copyClipboard_El.style.display = 'inline-block';
+        } else {
+            unitResult_El.innerText = "Invalid conversion";
+            resultValueContainer_El.style.display = 'block';
+        }
+    }
 });
 
-// Clipboard functionality
+
 copyClipboard_El.addEventListener('click', () => {
-    navigator.clipboard.writeText(unitResult_El.innerText).then(() => {
-        copyClipboard_El.style.display = 'none';
-        copyClipboardCheck_El.style.display = 'block';  // Show checkmark icon
-
-        setTimeout(() => {
-            copyClipboardCheck_El.style.display = 'none';
-            copyClipboard_El.style.display = 'block';  // Reset to clipboard icon after 2 seconds
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-    });
+    navigator.clipboard.writeText(unitResult_El.innerText)
+        .then(() => {
+            copyClipboard_El.style.display = 'none';
+            copyClipboardCheck_El.style.display = 'inline-block';
+            setTimeout(() => {
+                copyClipboardCheck_El.style.display = 'none';
+                copyClipboard_El.style.display = 'inline-block';
+            }, 2000); // Revert after 2 seconds
+        })
+        .catch(err => {
+            console.log('Failed to copy: ', err);
+        });
 });
+
 
 function getConversionRate(subunitName, unitType) {
     const selectedUnit = units.find(unit => unit.type === unitType);
@@ -281,23 +308,5 @@ function getConversionRate(subunitName, unitType) {
     return subunit ? subunit.conversionRate : null;
 }
 
-function convertUnits() {
-    const selectedUnitType = unitSelections_El.value;
-    const fromSubUnit = fromSubUnitSelections_El.value;
-    const toSubUnit = toSubUnitSelections_El.value;
-    const inputValue = parseFloat(convertValue_El.value);
 
-    const fromRate = getConversionRate(fromSubUnit, selectedUnitType);
-    const toRate = getConversionRate(toSubUnit, selectedUnitType);
-
-    if (fromRate && toRate && !isNaN(inputValue)) {
-        const baseValue = inputValue * fromRate;
-        const resultValue = baseValue / toRate;
-
-        unitResult_El.innerText = `${resultValue.toFixed(2)} ${toSubUnit}`;
-        resultValueContainer_El.style.display = 'block';
-    } else {
-        unitResult_El.innerText = "Invalid conversion";
-        resultValueContainer_El.style.display = 'block';
-    }
-}
+initializeUI();
