@@ -189,6 +189,11 @@ const units = [
 
 
 
+
+
+
+
+
 const unitSelections_El = document.getElementById('unitSelection');
 const fromSubUnitSelections_El = document.getElementById('fromSubUnitSelection');
 const toSubUnitSelections_El = document.getElementById('toSubUnitSelection');
@@ -199,8 +204,12 @@ const convertIcon_El = document.getElementById('convertIcon');
 const unitResult_El = document.getElementById('unitResult');
 const copyClipboard_El = document.getElementById('copyclipboard');
 const copyClipboardCheck_El = document.getElementById('copyclipboardcheck');
+const icons_El = document.querySelectorAll('i');
+const labels_El = document.querySelectorAll('label');
+
 
 function initializeUI() {
+    // Initially hide elements
     toSubUnitSelections_El.style.display = 'none';
     fromSubUnitSelections_El.style.display = 'none';
     convertButton_El.style.display = 'none';
@@ -208,17 +217,19 @@ function initializeUI() {
     resultValueContainer_El.style.display = 'none';
     convertIcon_El.style.display = 'none';
     copyClipboardCheck_El.style.display = 'none';
+    
+    // Hide all icons and labels
+    icons_El.forEach(icon => icon.style.display = 'none');
+    labels_El.forEach(label => label.style.display = 'none');  // Set display to none initially
 
-
-    units.forEach((unit) => {
+    // Populate unit dropdown
+    units.forEach(unit => {
         const option = document.createElement('option');
         option.value = unit.type;
         option.innerText = unit.type;
         unitSelections_El.appendChild(option);
     });
 }
-
-
 
 unitSelections_El.addEventListener('change', () => {
     populateSubUnits();
@@ -230,15 +241,20 @@ function populateSubUnits() {
     const selectedUnit = units.find(unit => unit.type === selectedUnitType);
 
     if (selectedUnit) {
+        // Clear previous subunits
         fromSubUnitSelections_El.innerHTML = '';
         toSubUnitSelections_El.innerHTML = '';
 
-
+        // Show subunits dropdowns
         fromSubUnitSelections_El.style.display = 'block';
-        convertButton_El.style.display = 'none';
         toSubUnitSelections_El.style.display = 'block';
+        convertButton_El.style.display = 'none';  // Hide the button until selection
 
+        // Show icons and labels again
+        icons_El.forEach(icon => icon.style.display = 'block');
+        labels_El.forEach(label => label.style.display = 'block');  // Show labels
 
+        // Populate subunits in the dropdown
         selectedUnit.subunits.forEach(subunit => {
             const fromOption = document.createElement('option');
             fromOption.value = subunit.name;
@@ -257,9 +273,6 @@ function populateSubUnits() {
         convertIcon_El.style.display = 'block';
     }
 }
-
-
-
 
 convertButton_El.addEventListener('click', () => {
     const selectedUnitType = unitSelections_El.value;
@@ -285,7 +298,6 @@ convertButton_El.addEventListener('click', () => {
     }
 });
 
-
 copyClipboard_El.addEventListener('click', () => {
     navigator.clipboard.writeText(unitResult_El.innerText)
         .then(() => {
@@ -301,12 +313,10 @@ copyClipboard_El.addEventListener('click', () => {
         });
 });
 
-
 function getConversionRate(subunitName, unitType) {
     const selectedUnit = units.find(unit => unit.type === unitType);
     const subunit = selectedUnit.subunits.find(sub => sub.name === subunitName);
     return subunit ? subunit.conversionRate : null;
 }
-
 
 initializeUI();
